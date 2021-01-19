@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'tralelho.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
 
@@ -116,16 +116,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+if os.getcwd() == '/app':
+    import dj_database_url
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    ALLOWED_HOSTS = ['APP_NAME.herokuapp.com']
+    DEBUG = True
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(file)))
+
+
 STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILE_DIRS = [
+    "static/images",
+    "static/css",
+    "staticfiles", ]
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
