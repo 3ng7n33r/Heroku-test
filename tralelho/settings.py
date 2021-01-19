@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import django_heroku
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -125,8 +124,7 @@ if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     ALLOWED_HOSTS = ['APP_NAME.herokuapp.com']
     DEBUG = True
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(file)))
-
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
