@@ -1,1 +1,1 @@
-web: gunicorn tralelho.wsgi --log-file
+web: gunicorn gettingstarted.wsgi --log-file -
