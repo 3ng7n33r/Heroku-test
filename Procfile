@@ -1,1 +1,1 @@
-web: gunicorn tralelho.wsgi
+web: gunicorn tralelho.wsgi --pythonpath tralelho --log-file - 
